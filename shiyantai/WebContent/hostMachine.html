@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>主机实验</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="assets/Resources/css/bootstrap.min.css" rel="stylesheet">
+	<script src="assets/Resources/js/jquery.js"></script>
+	<script src="assets/Resources/js/bootstrap.min.js"></script>
+	<script src="assets/Resources/js/vue.min.js"></script>	
+	<link href="assets/Resources/css/sub-style.css" rel="stylesheet"/>
+</head>
+<style>
+	html, body {
+		background-color: transparent;
+		height: 100%;
+		width: 100%;
+	}
+	
+	.chart{
+		margin: 5px;
+		height: 100%;
+		border:2px solid burlywood;
+		border-radius:10px;
+	}
+	
+	.chart-sm{
+		margin:5px;
+		border:2px solid;
+		border-radius:3px;
+	}
+	
+	.container-fluid {
+		width: 100%;
+		height: 85%;
+	}
+	
+	.info-block {
+		float: left;
+		border: 3px solid;
+	}
+	
+	.chart-container {
+		height: 100%;
+	}
+	
+	.chart-row-container {
+		height: 35%;
+	}
+	
+	.txtbckcolr{
+		background: none;
+		color: white;
+	}
+	
+	.panel-default>.panel-heading{
+		background: yellowgreen;
+		color: white;
+	}
+	
+	.axis-selected {
+		width: 100%;
+		display: inline-block;
+		background-color:#7FFF00;
+		border-radius: 10px;
+		color: black;
+		margin-right: 100px;
+	}
+	
+	.axis-selected label{
+		width: 100%;
+		display: inline-block;
+		background-color:#7FFF00;
+		border-radius: 10px;
+		color: black;
+		margin-right: 100px;
+	}
+	
+	.axis-noselect {
+		width: 100%;
+		display: inline-block;
+		background-color: transparent;
+		color: white;
+		margin-right: 100px;
+	}
+</style>
+<body>
+	<div class="container-fluid" id="data-reply">
+		<div class="row chart-row-container ">
+			<div class="col-md-6 chart-container">
+				<div class="chart" id="chart0">这是图表</div>				
+			</div>
+			<div class="col-md-6 chart-container">				
+				<div class="chart" id="chart1">这是图表</div>				
+			</div>
+		</div>
+		<div class="row chart-row-container ">
+			<div class="col-md-6 chart-container">				
+				<div class="chart" id="chart2">这是图表</div>				
+			</div>
+			<div class="col-md-6 chart-container">				
+				<div class="chart" id="chart3">这是图表</div>
+			</div>
+		</div>
+		<div class="row"  style="height:45%; margin-top:10px;">
+			<!--
+            	作者：jtlsq@sina.com
+            	时间：2018-03-22
+            	描述：参数设置
+            -->
+			<div class="panel panel-default info-block" style="width:20%;height: 100%;">
+				<div class="panel-heading">参数设置</div>
+				<div class="panel-body panel-body-height">
+					<div class="input-group input-group-sm">
+						<span class="input-group-addon txtbckcolr">车号</span>
+						<span>{{E1}}</span>
+					</div>
+					<div class="input-group input-group-sm">
+						<span class="input-group-addon txtbckcolr">主机编号</span>
+						<span>{{E2}}</span>
+					</div>
+					<div class="input-group input-group-sm">
+						<span class="input-group-addon txtbckcolr">测试人员</span>
+						<span>{{E3}}</span>
+					</div>
+				</div>
+			</div>
+			<!--
+            	作者：jtlsq@sina.com
+            	时间：2018-03-22
+            	描述：主机型号
+            -->
+			<div class="panel panel-default info-block" style="width:10%;height: 100%;">
+				<div class="panel-heading">主机型号</div>
+				<div class="panel-body panel-body-height">
+					<div id="E4" class="checkbox" v-bind:class="{'axis-selected':E4==='1','axis-noselect':E4!='1'}">
+						<label for="machineTypE1" >TFX1</label>
+					</div>
+					<div class="checkbox" v-bind:class="{'axis-selected':E4==='2','axis-noselect':E4!='2'}">
+						<label for="machineTypE2">SAB</label>
+					</div>
+					<div class="checkbox" v-bind:class="{'axis-selected':E4==='3','axis-noselect':E4!='3'}">
+						<label for="machineTypE3">KNORR</label>
+					</div>
+					<div class="checkbox" v-bind:class="{'axis-selected':E4==='4','axis-noselect':E4!='4'}">
+						<label for="machineTypE4">SFH-2</label>
+					</div>
+				</div>
+			</div>
+			<!--
+            	作者：jtlsq@sina.com
+            	时间：2018-03-22
+            	描述：门控信号
+            -->
+			<div class="panel panel-default info-block" style="width:10%;height: 100%;">
+				<div class="panel-heading">门控信号</div>
+				<div class="panel-body panel-body-height">
+					<div id="E5" class="checkbox" v-bind:class="{'axis-selected':E5==='1','axis-noselect':E5!='1'}">
+						<label for="">有</label>
+					</div>
+					<div class="checkbox"v-bind:class="{'axis-selected':E5==='2','axis-noselect':E5!='2'}">
+						<label for="">无</label>
+					</div>
+				</div>
+			</div>
+			<!--
+            	作者：jtlsq@sina.com
+            	时间：2018-03-22
+            	描述：滑行轴
+            -->
+			<div class="panel panel-default info-block" style="width:10%;height: 100%;">
+				<div class="panel-heading">滑行轴</div>
+				<div class="panel-body panel-body-height">
+					<div class="checkbox" v-bind:class="{'axis-selected':E7==='1','axis-noselect':E7!='1'}">
+						<label for="">1 轴滑行</label>
+					</div>
+					<div class="checkbox" v-bind:class="{'axis-selected':E8==='1','axis-noselect':E8!='1'}">
+						<label for="">2 轴滑行</label>
+					</div>
+					<div class="checkbox" v-bind:class="{'axis-selected':E9==='1','axis-noselect':E9!='1'}">
+						<label for="">3 轴滑行</label>
+					</div>
+					<div class="checkbox" v-bind:class="{'axis-selected':E10==='1','axis-noselect':E10!='1'}">
+						<label for="">4 轴滑行</label>
+					</div>
+				</div>
+			</div>
+			<!--
+            	作者：jtlsq@sina.com
+            	时间：2018-03-22
+            	描述：实验结果
+            -->
+			<div class="panel panel-default info-block" style="width:20%;height: 100%;">
+				<div class="panel-heading">实验结果</div>
+				<div class="panel-body panel-body-height">
+					<div class="input-group input-group-sm">
+						<span class="input-group-addon txtbckcolr">自动上电结果</span>
+						<span>{{E11}}</span>
+					</div>
+					<div class="input-group input-group-sm">
+						<span class="input-group-addon txtbckcolr">门控结果</span>
+						<span>{{E12}}</span>
+					</div>
+					<div class="input-group input-group-sm">
+						<span class="input-group-addon txtbckcolr">自动断电时间</span>
+						<span>{{E13}}</span>
+					</div>
+					<div class="input-group input-group-sm">
+						<span class="input-group-addon txtbckcolr">自动断电结果</span>
+						<span>{{E14}}</span>
+					</div>
+					<div class="input-group input-group-sm">
+						<span class="input-group-addon txtbckcolr">故障检测结果</span>
+						<span>{{E15}}</span>
+					</div>
+				</div>
+			</div>
+			<!--
+            	作者：jtlsq@sina.com
+            	时间：2018-03-22
+            	描述：提示信息
+            -->
+			<div class="panel panel-default info-block" style="width:30%;height: 100%;">
+				<div class="panel-heading">提示信息</div>
+				<div class="panel-body panel-body-height" style="height: 85%;">
+					<form role="form">
+						<textarea id="E32" class="form-control" style="background: none;color: white;" rows="7" v-model="E32"></textarea>						
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					警告！
+				</h4>
+			</div>
+			<div class="modal-body">
+				WebSocket未连接！
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+				</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+<!--end 警告模态框-->
+</body>
+<script src="assets/Resources/js/sockjs-0.3.min.js"></script>
+<script src="assets/Resources/js/stomp.js"></script>
+<!-- 将canvasJS库更换为echarts-->
+<script src="assets/Resources/js/echarts.js"></script>
+<script src="assets/app/main.js"></script>
+<!-- <script src="assets/Resources/js/canvasjs.min.js"></script>
+<script src="assets/Resources/js/jquery.canvasjs.min.js"></script> -->
+<script type="text/javascript">
+	//定义四个图表信息
+	//index和图表对应关系,[,][0]表示图表下标,[1]表示图表线条下标
+	var indexToline = {'16':[0,0],'17':[0,1],'18':[0,2],'19':[0,3],'20':[1,0],'21':[1,1],'22':[1,2],'23':[1,3],'24':[2,0],'25':[2,1],'26':[2,2],'27':[2,3],'28':[3,0],'29':[3,1],'30':[3,2],'31':[3,3]}
+	//四个图表
+	var charts = [];
+	var options = [];
+	
+	var chartCollector = (function(){
+		var chartsMsg = [{id:'chart0',title:'速度:km/h',xLength:400,yLength:500,interval:125,inverse:true},
+			      {id:'chart1',title:'压力:kPa',xLength:400,yLength:1000,interval:250,inverse:true},
+			      {id:'chart2',title:'保压',xLength:400,yLength:10,interval:2,inverse:true},
+			      {id:'chart3',title:'排风',xLength:400,yLength:10,interval:2,inverse:true}];
+		return {
+			init: function(){
+				for(var i in chartsMsg){
+					charts[i] = echarts.init($("#"+chartsMsg[i].id)[0]);
+				    options[i] = {
+						title:{
+							text:chartsMsg[i].title
+						},
+						xAxis:{
+							max:chartsMsg[i].xLength,
+							show:false
+						},
+						yAxis:{
+							min:0,
+							max:chartsMsg[i].yLength,
+							inverse:chartsMsg[i].inverse
+						},
+						series:[{type:'line',showSymbol:false,hoverAnimation:false,data:[]},
+								{type:'line',showSymbol:false,hoverAnimation:false,data:[]},
+								{type:'line',showSymbol:false,hoverAnimation:false,data:[]},
+								{type:'line',showSymbol:false,hoverAnimation:false,data:[]}]
+					};
+					//初始化一次
+					charts[i].setOption[options[i]];
+				}
+			}		
+		}
+	})();
+
+
+	var dataReplyVm = new Vue({
+		el: "#data-reply",			
+		data: {
+			E1: '---',  E2:  '---', E3:  '---', E4:  '1', E5:  '2', E6:  '---',
+			E7: '1',  E8:  '---', E9:  '1', E10: '---', E11: '---', E12: '---',
+			E13: '---', E14: '---', E15: '---', E16: '---', E17: '---', E18: '---',
+			E19: '---', E20: '---', E21: '---', E22: '---', E23: '---', E24: '---',
+			E25: '---', E26: '---', E27: '---', E28: '---', E29: '---', E30: '---',
+			E31: '---', E32: '---'
+		},
+		mounted: function(){
+			chartCollector.init();
+		}
+	});	 
+
+	(function (){
+		var pointsArray = [];
+		for(var index = 1; index <= 32; index++){
+			points.push('E' + index);
+		}
+		var points = pointsArray.join(',');
+		setInterval(function () {			
+			getCurrentData(points, function(values){            
+				for(var key in values){
+					var index = parseInt(key.substr(1, key.length-1));
+					if(index >= 16 && index <= 31){
+						options[indexToline[index+''][0]].series[indexToline[index+''][1]].data = values[key].map(function(value){
+								return [value['x'],value['y']];
+							})
+					}else{
+						dataReplyVm[key] = values[key];  
+					}					
+				}
+
+				//line图填充数据后，重绘图表
+				for(var i in charts){
+					charts[i].setOption(options[i]);
+				}    
+			});        
+		}, 5000);
+	})();
+
+	/**
+	*解析json填充dom节点
+	*@param d 
+	*/
+	// function processMsg(msg){
+	// 	for(var k in msg){
+	// 		if(msg[k]&&msg[k]!=-1){//判断只存在并且不是-1
+	// 		var index = parseInt(k.substr(1,k.length-1));
+	// 		//16条波形图
+	// 		if(index >= 16&&index <= 31){
+	// 			// charts[indexToline[index+''][0]].options.series[indexToline[index+''][1]] = {type:'line',showSymbol:false,hoverAnimation:false,data:msg[k]}
+	// 			options[indexToline[index+''][0]].series[indexToline[index+''][1]].data = msg[k].map(function(value){
+	// 					return [value['x'],value['y']];
+	// 				})
+	// 			//一般的input框
+	// 		}else{
+	// 			dataReplyVm[k] = msg[k];
+	// 		}
+	// 	  }
+	// 	}
+	// 	//line图填充数据后，重绘图表
+	// 	for(var i in charts){
+	// 		charts[i].setOption(options[i]);
+	// 	}
+	// }
+
+</script>
+</html>

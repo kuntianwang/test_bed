@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>防滑阀测试</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="assets/Resources/css/bootstrap.min.css" rel="stylesheet">
+	<script src="assets/Resources/js/jquery.js"></script>
+	<script src="assets/Resources/js/bootstrap.min.js"></script>
+	<script src="assets/Resources/js/vue.min.js"></script>	
+	<link href="assets/Resources/css/sub-style.css" rel="stylesheet"/>
+	<script src="assets/Resources/js/datafetcher.js"></script>
+</head>
+<style>
+body {
+	background-color: transparent;
+}	
+
+.figure{
+	width: 100%;
+	height: 500px;
+}
+.outset{
+	border: 1px solid;
+	border-radius: 3px;
+}
+.form-control-sm{
+	width: 80% !important;
+}
+
+.data-line {
+	height: 30px;
+	text-align: left;
+}
+.head{
+	 height: 18px; 
+	 margin-bottom: 70px;
+}
+.input-container{
+	height:18; 
+	width: 150px; 
+	margin-left: 30px; 
+	float: left; 
+	font-size: 12px;
+}
+
+.table-container {
+	width: 85%; 
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 50px;
+}
+.table-header {
+	/*background-color: #6959CD;*/
+}
+.data{
+	text-align: center;
+}
+
+tr {
+	height: 20px;
+}
+
+tr:hover{
+	background-color: 	#96CDCD;
+}
+
+#test-type { 
+	width: auto;
+	height: 60px;
+	align-content: left;
+	background-color:#68838B;
+	opacity: 0.5;
+}
+
+#test-type li {
+	display: block; 
+	 line-height: 53px;
+	 width: auto;
+	 padding: 4px 20px;
+	 float: left;
+	 font-size: 16px;
+}
+.selected {
+	background-color:#7FFF00;
+	border-radius: 10px;
+	color: black;
+}
+.noselect {
+	background-color: #68838B;
+	color: white;
+}
+
+#type {
+	width: auto;
+	float: left;
+}
+.head-info {
+	width: 900px;
+	height: 60px;
+	line-height: 60px;
+	text-align: center;
+	float: left;
+}
+.base-info {
+	height:60px; 
+	line-height: 60px; 
+	float: left; 
+	font-size: 36px; 
+	color:#FFF; 
+	font-weight: bold; 
+	margin-left: 43px;
+}
+.base-info span{ color: #45f8ff;}
+.figure-info {
+	height:60px; 
+	line-height: 60px; 
+	font-weight: bold;
+	font-size: 36px;
+	color:#FFF; 
+}
+.axis-selected {
+	width: 100px;
+	display: inline-block;
+	background-color:#7FFF00;
+	border-radius: 10px;
+	color: black;
+}
+.axis-noselect {
+	width: 100px;
+	display: inline-block;
+	background-color: transparent;
+	color: white;
+}
+.code-num {
+	color: #45f8ff;
+}
+.figure-block {
+	height: 50%;
+}
+</style>
+<body>
+	<div id="data-reply">
+		<div class="head">
+			<div id="type">
+				<ul id="test-type">
+					<li v-bind:class="{selected: B3 === '1', noselect: B3 != '1'}">SAB</li>
+					<li v-bind:class="{selected: B3 === '2', noselect: B3 != '2'}">TFX1-48V</li>
+					<li v-bind:class="{selected: B3 === '3', noselect: B3 != '3'}">TFX1-24V</li>
+					<li v-bind:class="{selected: B3 === '4', noselect: B3 != '4'}">SFH-2</li>
+					<li v-bind:class="{selected: B3 === '5', noselect: B3 != '5'}">KNORR</li>
+				</ul>
+			</div>
+			<div class="head-info">
+				<p class="base-info">车号：<span>{{B81}}</span>&nbsp;测试人员：<span>{{B82}}</span></p>				
+			</div>	
+		</div>
+		<div class="container-fluid">			
+			<div class="row">
+				<div class="col-md-6">	
+					<div class="figure-block">
+						<p class="figure-info"><span v-bind:class="{'axis-selected': B5 === '1', 'axis-noselect': B5 != '1'}">一轴</span>&nbsp;&nbsp;编号：<span class="code-num">{{B6}}</span></p>					
+						<table class="table-container">
+							<thead>
+								<tr class="active table-header">
+									<th>实验项目</th>
+									<th>慢充性能</th>
+									<th>试验压力</th>
+									<th>阶排性能</th>
+									<th>直排性能</th>
+									<th>阶充性能</th>
+									<th>电排1.2s</th>
+									<th>泄漏量</th>
+									<th>直通缓冲</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="data-line">
+									<td>标准值</td>
+									<td>>60</td>
+									<td>500±20</td>
+									<td><350</td>
+									<td><20</td>
+									<td>>150</td>
+									<td><80</td>
+									<td><5</td>
+									<td><5</td>
+								</tr>
+								<tr class="data-line">
+									<td>测试值</td>
+									<td id="B7">{{B7}}</td>
+									<td id="B9">{{B9}}</td>
+									<td id="B11">{{B11}}</td>
+									<td id="B13">{{B13}}</td>
+									<td id="B15">{{B15}}</td>
+									<td id="B17">{{B17}}</td>
+									<td id="B19">{{B19}}</td>
+									<td id="B21">{{B21}}</td>
+								</tr>
+								<tr class="data-line">
+									<td>结果</td>
+									<td id="B8">{{B8}}</td>
+									<td id="B10">{{B10}}</td>
+									<td id="B12">{{B12}}</td>
+									<td id="B14">{{B14}}</td>
+									<td id="B16">{{B16}}</td>
+									<td id="B18">{{B18}}</td>
+									<td id="B20">{{B20}}</td>
+									<td id="B22">{{B22}}</td> 
+								</tr>
+							</tbody>
+						</table>
+						<div class="figure outset" style="margin-bottom: 20px;" id="B23">这是图表</div>
+					</div>				
+					<div class="figure-block">
+						<p class="figure-info"><span v-bind:class="{'axis-selected': B43 === '1', 'axis-noselect': B43 != '1'}">三轴</span>&nbsp;&nbsp;编号：<span class="code-num">{{B44}}</span></p>
+						<table class="table-container">
+							<thead>
+								<tr class="active table-header">
+									<th>实验项目</th>
+									<th>慢充性能</th>
+									<th>试验压力</th>
+									<th>阶排性能</th>
+									<th>直排性能</th>
+									<th>阶充性能</th>
+									<th>电排1.2s</th>
+									<th>泄漏量</th>
+									<th>直通缓冲</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="data-line">
+									<td>标准值</td>
+									<td>>60</td>
+									<td>500±20</td>
+									<td><350</td>
+									<td><20</td>
+									<td>>150</td>
+									<td><80</td>
+									<td><5</td>
+									<td><5</td>
+								</tr>
+								<tr class="data-line">
+									<td>测试值</td>
+									<td id="B45">{{B45}}</td>
+									<td id="B47">{{B47}}</td>
+									<td id="B49">{{B49}}</td>
+									<td id="B51">{{B51}}</td>
+									<td id="B53">{{B53}}</td>
+									<td id="B55">{{B55}}</td>
+									<td id="B57">{{B57}}</td>
+									<td id="B59">{{B59}}</td>
+								</tr>
+								<tr class="data-line">
+									<td>结果</td>
+									<td id="B46">{{B46}}</td>
+									<td id="B48">{{B48}}</td>
+									<td id="B50">{{B50}}</td>
+									<td id="B52">{{B52}}</td>
+									<td id="B54">{{B54}}</td>
+									<td id="B56">{{B56}}</td>
+									<td id="B58">{{B58}}</td>
+									<td id="B60">{{B60}}</td>
+								</tr>
+							</tbody>
+						</table>					
+						<div class="figure outset" style="margin-bottom: 20px;" id="B61">这是图表</div>
+					</div>									
+				</div>
+				<div class="col-md-6">
+					<div class="figure-block">
+						<p class="figure-info"><span v-bind:class="{'axis-selected': B24 === '1', 'axis-noselect': B24 != '1'}">二轴</span>&nbsp;&nbsp;编号：<span class="code-num">{{B25}}</span></p>
+						<table class="table-container">
+							<thead>
+								<tr class="active table-header">
+									<th>实验项目</th>
+									<th>慢充性能</th>
+									<th>试验压力</th>
+									<th>阶排性能</th>
+									<th>直排性能</th>
+									<th>阶充性能</th>
+									<th>电排1.2s</th>
+									<th>泄漏量</th>
+									<th>直通缓冲</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="data-line">						
+									<td>标准值</td>
+									<td>>60</td>
+									<td>500±20</td>
+									<td><350</td>
+									<td><20</td>
+									<td>>150</td>
+									<td><80</td>
+									<td><5</td>
+									<td><5</td>
+								</tr>
+								<tr class="data-line">
+									<td>测试值</td>
+									<td id="B26">{{B26}}</td>
+									<td id="B28">{{B28}}</td>
+									<td id="B30">{{B30}}</td>
+									<td id="B32">{{B32}}</td>
+									<td id="B34">{{B34}}</td>
+									<td id="B36">{{B36}}</td>
+									<td id="B38">{{B38}}</td>
+									<td id="B40">{{B40}}</td>
+								</tr>
+								<tr class="data-line">
+									<td>结果</td>
+									<td id="B27">{{B27}}</td>
+									<td id="B29">{{B29}}</td>
+									<td id="B31">{{B31}}</td>
+									<td id="B33">{{B33}}</td>
+									<td id="B35">{{B35}}</td>
+									<td id="B37">{{B37}}</td>
+									<td id="B39">{{B39}}</td>
+									<td id="B41">{{B41}}</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="figure outset" style="margin-bottom: 20px;" id="B42">这是图表</div>
+					</div>
+					<div class="figure-block">
+						<p class="figure-info"><span v-bind:class="{'axis-selected': B62 === '1', 'axis-noselect': B62 != '1'}">四轴</span>&nbsp;&nbsp;编号：<span class="code-num">{{B63}}</span></p>
+						<table class="table-container">
+							<thead>
+								<tr class="active table-header">
+									<th>实验项目</th>
+									<th>慢充性能</th>
+									<th>试验压力</th>
+									<th>阶排性能</th>
+									<th>直排性能</th>
+									<th>阶充性能</th>
+									<th>电排1.2s</th>
+									<th>泄漏量</th>
+									<th>直通缓冲</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="data-line">		
+									<td>标准值</td>
+									<td>>60</td>
+									<td>500±20</td>
+									<td><350</td>
+									<td><20</td>
+									<td>>150</td>
+									<td><80</td>
+									<td><5</td>
+									<td><5</td>
+								</tr>
+								<tr class="data-line">
+									<td>测试值</td>
+									<td id="B64">{{B64}}</td>
+									<td id="B66">{{B66}}</td>
+									<td id="B68">{{B68}}</td>
+									<td id="B70">{{B70}}</td>
+									<td id="B72">{{B72}}</td>
+									<td id="B74">{{B74}}</td>
+									<td id="B76">{{B76}}</td>
+									<td id="B78">{{B78}}</td>
+								</tr>
+								<tr class="data-line">
+									<td>结果</td>
+									<td id="B65">{{B65}}</td>
+									<td id="B67">{{B67}}</td>
+									<td id="B69">{{B69}}</td>
+									<td id="B71">{{B71}}</td>
+									<td id="B73">{{B73}}</td>
+									<td id="B75">{{B75}}</td>
+									<td id="B77">{{B77}}</td>
+									<td id="B79">{{B79}}</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="figure outset" style="margin-bottom: 20px;" id="B80">这是图表</div>
+					</div>					
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					警告！
+				</h4>
+			</div>
+			<div class="modal-body">
+				WebSocket未连接！
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+				</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+<!--end 警告模态框-->
+</body>
+<script src="assets/Resources/js/sockjs-0.3.min.js"></script>
+<script src="assets/Resources/js/stomp.js"></script>
+<!-- 将canvasJS库更换为echarts-->
+<script src="assets/Resources/js/canvasjs.min.js"></script>
+<script src="assets/Resources/js/jquery.canvasjs.min.js"></script>
+<script src="assets/Resources/js/echarts.js"></script>
+<script src="assets/app/main.js"></script>
+
+<script>
+	var chartCollector = (function(){
+		//定义4个图表信息
+		var chartsMsg = [{id:'B23',title:'压力',xLength:11050,yLength:700},
+						{id:'B42',title:'压力',xLength:11050,yLength:700},
+						{id:'B61',title:'压力',xLength:11050,yLength:700},
+						{id:'B80',title:'压力',xLength:11050,yLength:700}];
+		var charts = {}; //波形图图表
+
+		/*
+		*设置定时从队列取数据重绘chart
+		*/
+		function reDrawChart(chart){
+			setInterval(function(){
+				var	queue = chart.dataQueue;
+				if(queue.length>0){
+					chart.option.series[0].data.push(queue.shift());
+				}
+				chart.setOption(chart.option);
+			}, 1);
+		}	
+
+		return {
+			init: function(){
+				for(var i in chartsMsg){
+					charts[chartsMsg[i].id] = echarts.init($("#"+chartsMsg[i].id)[0]);
+					charts[chartsMsg[i].id].dataQueue = []//数据队列
+					charts[chartsMsg[i].id].option = {
+						title:{
+							text:chartsMsg[i].title,
+							textStyle:{
+				               fontSize:15,
+				               color:'#fff'
+				           }
+						},
+						grid:{
+							x: 35,
+							y: 30,
+							x2: 20,
+							y2: 20
+						},
+						xAxis:{
+							max:chartsMsg[i].xLength,
+							axisLabel: {
+								textStyle: {
+									color: '#fff'
+								}
+							}
+						},
+						yAxis:{
+							min:0,
+							max:chartsMsg[i].yLength,
+							axisLabel: {
+								textStyle: {
+									color: '#fff'
+								}
+							}
+						},
+						series:[{
+							type:'line',
+							showSymbol: false,
+							hoverAnimation: false,
+							data:[]
+						}]
+					};
+					//初始化一次
+					charts[chartsMsg[i].id].setOption(charts[chartsMsg[i].id].option);
+					reDrawChart(charts[chartsMsg[i].id]);
+				}
+			},
+			resizeAll: function(){
+				for(var key in charts){
+					charts[key].resize();
+				}
+			},
+			intoQueue: function(datas,name){				
+				for(var i in datas){
+					charts[name].dataQueue.push(datas[i]);
+				}	
+			}
+		}
+	})();
+
+	window.onresize = function(){
+		chartCollector.resizeAll();
+	}
+
+	var dataReplyVm = new Vue({
+			el: "#data-reply",			
+			data: {
+				B1: '---',  B2:  '---', B3:  '2', B4:  '---', B5:  '1', B6:  '12345',
+				B7: '---',  B8:  '---', B9:  '---', B10: '---', B11: '---', B12: '---',
+				B13: '---', B14: '---', B15: '---', B16: '---', B17: '---', B18: '---',
+				B19: '---', B20: '---', B21: '---', B22: '---', B23: '---', B24: '---',
+				B25: '---', B26: '---', B27: '---', B28: '---', B29: '---', B30: '---',
+				B31: '---', B32: '---', B33: '---', B34: '---', B35: '---', B36: '---',
+				B37: '---', B38: '---', B39: '---', B40: '---', B41: '---', B42: '---',
+				B43: '---', B44: '---', B45: '---', B46: '---', B47: '---', B48: '---',
+				B49: '---', B50: '---', B51: '---', B52: '---', B53: '---', B54: '---',
+				B55: '---', B56: '---', B57: '---', B58: '---', B59: '---', B60: '---',
+				B61: '---', B62: '---', B63: '---', B64: '---', B65: '---', B66: '---',
+				B67: '---', B68: '---', B69: '---', B70: '---', B71: '---', B72: '---',
+				B73: '---', B74: '---', B75: '---', B76: '---', B77: '---', B78: '---',
+				B79: '---', B80: '---', B81: '1703', B82: '---'
+			},
+			mounted: function(){
+				chartCollector.init();
+			}
+		});	 
+
+	(function (){
+		var pointsArray = [];
+		for(var index = 1; index <= 82; index++){
+			points.push('B' + index);
+		}
+		var points = pointsArray.join(',');
+		setInterval(function () {			
+			getCurrentData(points, function(values){            
+				for(var key in values){
+					if('B23' === k || 'B42' === k || 'B61' === k || 'B80' === k){//4个波形图
+						if(values[k]){ //如果波形图键值对存在
+							chartCollector.intoQueue(values[k].map(function(value){
+								return [value['x'],value['y']/10];
+							}), k)
+						}
+					}else{
+						dataReplyVm[k] = values[k];				
+					}
+
+				}    
+			});        
+		}, 5000);
+	})();
+		
+
+	/*
+	*解析json字符串，填充相对应的dom
+	*@param d 
+	*/
+	// function processMsg(msg){
+	// 	for(var k in msg){
+	// 		if('B23' === k || 'B42' === k || 'B61' === k || 'B80' === k){//4个波形图
+	// 			if(msg[k]){ //如果波形图键值对存在
+	// 				chartCollector.intoQueue(msg[k].map(function(value){
+	// 					return [value['x'],value['y']/10];
+	// 				}), k)
+	// 			}
+	// 		}else{
+	// 			dataReplyVm[k] = msg[k];				
+	// 		}
+	// 	}
+	// }
+</script>
+</html>

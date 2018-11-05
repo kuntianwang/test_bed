@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>104电空试验台</title>
+		<link href="assets/Resources/css/style.css" rel="stylesheet"/>
+		<script src="assets/Resources/js/vue.min.js"></script>	
+		<script src="assets/Resources/js/datafetcher.js"></script>
+		<script src="assets/Resources/js/jquery.js"></script>
+	</head>
+	<body id="enterfull">
+		<div class="wrap">
+			<div class="title">
+				<a class="return" href="javascript :;" onClick="window.close();"><img src="assets/Resources/img/return-button.png" border="0"></a>
+			</div>
+			<div class="content">
+				<div class="left" id="left">
+					
+					<div>
+						<div class="info">
+							<p class="tit2">资产号12：<span>{{assetNo}}</span></p>
+							<p class="tit2">责任人1：<span>{{person}}</span></p>
+							<p class="tit2">上次小修日期1：<span>{{date1}}</span></p>
+							<p class="tit2">计划下次小修时间1：<span>{{date2}}</span></p>
+							<p class="tit2">建议下次大修时间1：<span>{{date3}}</span></p>
+						</div>
+						<div class="device-state">
+							<span class="bt">设备运行状态</span>
+							<span class="center state" v-if='normalStatus==1'><img src="assets/Resources/img/state1.png" alt="">&nbsp;在线</span>
+							<span class="center state" v-else-if='normalStatus==2'><img src="assets/Resources/img/state2.png" alt="">&nbsp;故障</span>
+							<span class="center state" v-else><img src="assets/Resources/img/state3.png" alt="">&nbsp;离线</span>
+						</div>	
+					</div>									
+					<marquee 
+					class="messageBar"					
+					behavior="scroll" 
+					direction="left" 
+					scrolldelay="1" 
+					scrollamount="20" 
+					onMouseOver="this.stop()" 
+					onMouseOut="this.start()">
+						<div v-for="message in messages" style="display: inline-block;">
+							<img src="assets/Resources/img/icon-warning.png" alt="" class="icon-class-warning"/> <span class="font-fault-message-bold">设备故障信息：</span><span class="font-fault-message-normal">"{{ getMessage(message) }}"&nbsp;&nbsp;</span>
+						</div>						
+					</marquee>
+					<table class="sensor-table">
+						<tr class="caption">
+							<td colspan="5">压力及时间显示</td>
+						</tr>
+						<tr class="table-head">
+							<th>列车管</th>
+							<th>副风缸</th>
+							<th>工作风缸</th>
+							<th>容1</th>
+							<th>制动缸</th>
+						</tr>
+						<tr class="table-data">
+							<td>{{A1}}</td>
+							<td>{{A2}}</td>
+							<td>{{A3}}</td>
+							<td>{{A4}}</td>
+							<td>{{A5}}</td>
+						</tr>						
+						<tr class="table-head">
+							<th>紧列</th>
+							<th>紧急室</th>
+							<th>容2</th>
+							<th>局减室</th>
+							<th>缓解风缸</th>
+						</tr>
+						<tr class="table-data">
+							<td>{{A6}}</td>
+							<td>{{A7}}</td>
+							<td>{{A8}}</td>
+							<td>{{A9}}</td>
+							<td>{{A10}}</td>								
+						</tr>
+					</table>
+				</div>
+				<div class="right" id="right">
+					<ul id="tab">
+						<li class="active"><a v-on:click="tabSwitching($event,'antiskidTest.html')">主阀实验</a></li>					
+						<li class="inactive"><a v-on:click="tabSwitching($event,'pressureSwitch.html')">紧急阀实验</a></li>					
+						<li class="inactive"><a v-on:click="tabSwitching($event,'sensor.html')">电磁阀实验</a></li>
+						<li class="inactive"><a v-on:click="tabSwitching($event,'hostMachine.html')">机能实验</a></li>
+						<li class="inactive"><a v-on:click="tabSwitching($event,'calibratePressure.html')">主阀实验</a></li>
+						<li class="inactive"><a v-on:click="tabSwitching($event,'selfChecking.html')">系统自检</a></li>
+						<li class="inactive"><a v-on:click="tabSwitching($event,'emergency.html')">紧急阀实验</a></li>
+						<li class="inactive"><a v-on:click="tabSwitching($event,'performance.html')">机能实验</a></li>
+						<li class="inactive"><a v-on:click="tabSwitching($event,'electrol.html')">电磁阀实验</a></li>
+					</ul>
+					<div id="tabContent" class="tab-content">
+						<iframe v-bind:src="hrefx"></iframe>
+					</div>
+				</div>
+			</div>			
+			<div class="footer"><span class="icon-manufacturer-logo"></span><span class="font-manufacturer-name">中车青岛四方车辆研究所有限公司</span></div>
+		</div>
+	</body>
+	<script>
+		function searchIndex(array1, element){
+			for(var index = 0; index < array1.length; index++){
+				if(array1[index] === element){
+					return index;
+				}
+			}
+
+			return -1;
+		}
+
+		var faultDic = [
+			'联控动作请现场人员确认!',
+			'列车未到位，请处理！',
+			'加载联控升降用户伸出托头!',
+			'有车体支撑联控同步错误，提示用户检查并调整!',			
+		];
+		var deviceVm = new Vue({
+			el:'#left',
+			data: {
+				assetNo: '465037001',
+				person: '王坤田',
+				date1: '2017-08-09',
+				date2: '2018-08-09',
+            	date3: '2024-01-31',
+				A1: 0,  // 速度传感器1
+				A2: 0,  // 速度传感器2
+				A3: 0,  // 速度传感器3
+				A4: 0,  // 速度传感器4	
+				A5: 0,  // 速度传感器5
+				A6: 0,  	// 压力传感器1
+				A7: 0,  	// 压力传感器2
+				A8: 0,  	// 压力传感器3
+				A9: 0,		// 压力传感器4
+				A10: 0,		// 压力传感器4					
+				messages: [0],
+				normalStatus: 1,	// 1:在线， 2：故障， 3：离线
+				gatewayStatus: 0	// 1:在线， 0：离线，默认离线状态
+			},
+			watch: {
+				gatewayStatus: function(newValue, oldValue){
+					if(newValue == 0) {
+						normalStatus = 3;
+					} else {
+						if(this.messages.length > 0){
+							normalStatus = 2;
+						} else {
+							normalStatus = 1;
+						}
+					}
+				},
+				messages: function(newValue, oldValue){
+					if(gatewayStatus == 0){
+						normalStatus = 3;
+						return;
+					}
+
+					if(newValue.length > 0){
+						normalStatus = 2;
+					} else {
+						normalStatus = 1;
+					}
+				}
+			},
+			methods: {
+				getMessage: function(code){
+					return faultDic[code];
+				},
+				updateFaultStatus: function(faultCode){
+					// faultCode 每个bit位代表一个故障，每个bit位对应的故障描述存放在faultDic数组里
+					var changeCode = this.A2 ^ faultCode;
+					for(var index = 0; index < 16; index++){
+						if((changeCode >> index) & 0x01){
+							if( 1 << index & this.A2){
+								// 故障恢复
+								var xx = searchIndex(this.messages, index);
+								if(xx >= 0){
+									this.messages.splice(xx, 1);
+								}
+							} else {
+								// 故障产生
+								this.messages.push(index);
+							}
+						}
+					}
+
+					this.A2 = faultCode;
+				}
+			}
+		});
+		
+		
+
+		var infoVm = new Vue({
+			el: '#right',
+			data: {
+				hrefx: 'antiskidTest.html',
+				hrefs: ['antiskidTest.html', 'pressureSwitch.html', 'sensor.html', 'hostMachine.html', 'calibratePressure.html', 'selfChecking.html','emergency.html','perfarmance','electrol'],
+				hrefIndex: 0,
+				handSwitch: 0
+			},
+			methods:{
+				//tabtitle切换
+				tabSwitching: function(evt,val){
+					var newIndex = searchIndex(this.hrefs, val);	
+					if(this.hrefIndex != newIndex){
+						this.hrefIndex = newIndex;
+						handSwitch = 1;	
+					} else {
+						return;
+					}	
+
+					this.hrefx=val;
+					var children = evt.target.parentElement.parentElement.children;
+					for(var index = 0; index < children.length; index++){
+						children[index].className = 'inactive';
+					}
+					evt.target.parentElement.className = 'active';
+				},
+				autoSwitching: function(index){
+					if(this.hrefIndex == index){
+						handSwitch = 0;
+					} else {
+						if(handSwitch != 0){
+							return;
+						}
+						this.hrefx = this.hrefs[index];
+						this.hrefIndex = index;
+					}					
+				}
+			}
+		});
+
+	setInterval(function () {
+		// 待定
+        getCurrentData('A2,A3,A4,A5,A6,A7,A8,A9,A10,A11,A12', function(values){            
+            for(var key in values){
+				deviceVm[key] = Number(values[key]);                            
+            }    
+        });        
+    }, 5000); 
+
+	// 网关状态
+    setInterval(function () {
+        getGatewayInfo(function(value){
+		 deviceVm.gatewayStatus = parseInt(value);                  
+        });        
+    }, 10000);
+
+	setInterval(function () {
+        getDeviceInfo(function(data){
+            if('time_LastMinorRepair' in data){
+                deviceVm.date1 = data['time_LastMinorRepair'];
+            }
+            
+            if('time_NextMinorRepair' in data){
+                deviceVm.date2 = data['time_NextMinorRepair'];
+            }
+            
+            if('time_NextHeavyRepair' in data){
+                deviceVm.date3 = data['time_NextHeavyRepair'];
+            }
+            
+            deviceVm.person = data['person_in_charge']; 
+            deviceVm.assetNo = data['num_asset']; 
+        });
+
+    }, 10000);
+	</script>
+
+<script>
+	
+    $(function(){
+        // 处理全屏(需要全屏显示DOM元素)
+        function launchFullScreen(element) {
+            // 先检测最标准的方法
+            if(element.requestFullScreen) {
+                element.requestFullScreen();
+            } else if(element.mozRequestFullScreen) {
+                // 其次，检测Mozilla的方法
+                element.mozRequestFullScreen();
+            } else if(element.webkitRequestFullScreen) {
+                // if 检测 webkit的API
+                element.webkitRequestFullScreen();
+            }
+        };
+
+        // 退出全屏,不用管具体是哪个元素，因为屏幕是唯一的。
+        function cancelFullscreen() {
+            if(document.cancelFullScreen) {
+                document.cancelFullScreen();
+            } else if(document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if(document.webkitCancelFullScreen) {
+                document.webkitCancelFullScreen();
+            }
+        };
+        // 显示全屏信息
+  
+        // 设置事件监听，DOM内容加载完成，和jQuery的$.ready() 效果差不多。
+        window.addEventListener("DOMContentLoaded", function() {
+            // 获取DOM元素
+            var enterfull = document.getElementById("enterfull");
+               
+            // 事件监听
+            enterfull.addEventListener("click", function() {
+                //
+                console.log(1)
+                launchFullScreen(document.documentElement);
+            });
+    
+        }, false);
+        // 全屏事件Events
+        document.addEventListener("fullscreenchange", function(e) {
+            console.dir(e);
+        });
+        document.addEventListener("mozfullscreenchange", function(e) {
+            console.dir(e);
+        });
+        document.addEventListener("webkitfullscreenchange", function(e) {
+            console.dir(e);
+        });
+    }) 
+</script>
+</html>

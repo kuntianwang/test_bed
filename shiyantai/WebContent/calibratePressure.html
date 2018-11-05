@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>104主阀实验</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="assets/Resources/css/bootstrap.min.css" rel="stylesheet">
+	<script src="assets/Resources/js/jquery.js"></script>
+	<script src="assets/Resources/js/bootstrap.min.js"></script>
+	<script src="assets/Resources/js/vue.min.js"></script>	
+	<link href="assets/Resources/css/sub-style.css" rel="stylesheet"/>
+	<script src="assets/Resources/js/datafetcher.js"></script>
+	<style type="text/css">
+		.container{
+			margin-top: 80px;
+			width: 100%;
+		}
+
+		table tr th {
+			text-align: center;
+		}
+		tr:hover{
+			background-color: 	#96CDCD;
+		}
+		/* tr{
+			height: 135px;
+			line-height: 135px;
+		}
+		.table>tbody>tr>td, 
+		.table>tbody>tr>th, 
+		.table>tfoot>tr>td, 
+		.table>tfoot>tr>th, 
+		.table>thead>tr>td, 
+		.table>thead>tr>th{
+			line-height: 135px;
+		} */
+		/* table tr{
+			background: none !important;
+			color: white;
+		} */
+	</style>
+</head>
+<body style="background: none !important;">
+	<div class="container" id="data-reply">
+	
+		<div class="row">
+			<div class="col-md-12">
+				<table class="table table-bordered">
+					<thead>
+						<tr class="table-header">
+							<th></th>
+							<th>各结合部不得泄露</th>
+							<th>工作压力充风至580Kpa的时间为60-90s</th>
+							<th>副风缸压力≥560Kpa</th>
+							<th>大排气口泄漏量≤120ml/min</th>
+							<th>小排气口泄漏量≤120ml/min</th>
+							<th>局部排气口肥皂泡直径≤25mm</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th>实验结果</th>
+							<td id="F1">{{F1}}</td>
+							<td id="F2">{{F2}}</td>
+							<td id="F3">{{F3}}</td>
+							<td id="F4">{{F4}}</td>
+							<td id="F5">{{F5}}</td>
+							<td id="F6">{{F6}}</td>
+						</tr>
+						<tr>
+							<th>实验结论</th>							
+							<td id="F7">{{F7}}</td>
+							<td id="F8">{{F8}}</td>
+							<td id="F9">{{F9}}</td>
+							<td id="F10">{{F10}}</td>
+							<td id="F11">{{F11}}</td>
+							<td id="F12">{{F12}}</td>
+						</tr>						
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-12">
+				<table class="table table-bordered">
+					<thead>
+						<tr class="table-header">
+							<th></th>
+							<th>各结合部不得泄露</th>
+							<th>大排气口泄漏量≤60ml/min</th>
+							<th>小排气口泄漏量≤60ml/min</th>
+							<th>制动管压力10s上升不得超过20Kpa</th>
+							<th>局减阀盖小孔处不得泄露</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th>实验结果</th>
+							<td id="F13">{{F13}}</td>
+							<td id="F14">{{F14}}</td>
+							<td id="F15">{{F15}}</td>
+							<td id="F16">{{F16}}</td>
+							<td id="F17">{{F17}}</td>
+						</tr>
+						<tr>
+							<th>实验结论</th>
+							<td id="F18">{{F18}}</td>
+							<td id="F19">{{F19}}</td>
+							<td id="F20">{{F20}}</td>
+							<td id="F21">{{F21}}</td>
+							<td id="F22">{{F22}}</td>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-12">
+				<table class="table table-bordered">
+					<thead>
+						<tr class="table-header">
+							<th></th>
+							<th>列车管减压20Kpa前发生局减作用</th>
+							<th>列车管减压40Kpa前发生制动作用</th>
+							<th>局排时间不超过15s</th>
+							<th>保压1min不得发生自然缓解</th>
+							<th>容积室压力上升10s内不超过20Kpa</th>
+							<th>容积室15s内应开始缓解</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th>实验结果</th>
+							<td id="F23">{{F23}}</td>
+							<td id="F24">{{F24}}</td>
+							<td id="F25">{{F25}}</td>
+							<td id="F26">{{F26}}</td>
+							<td id="F27">{{F27}}</td>
+							<td id="F28">{{F28}}</td>
+						</tr>
+						<tr>
+							<th>实验结论</th>							
+							<td id="F29">{{F29}}</td>
+							<td id="F30">{{F30}}</td>
+							<td id="F31">{{F31}}</td>
+							<td id="F32">{{F32}}</td>
+							<td id="F33">{{F33}}</td>
+							<td id="F34">{{F34}}</td>
+						</tr>						
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-12">
+				<table class="table table-bordered">
+					<thead>
+						<tr class="table-header">
+							<th></th>
+							<th>局减阀关闭压力应为50-70Kpa</th>
+							<th>制动缸压力上升，20s内不得超过10Kpa</th>
+							<th>局减阀开放压力不得小于20Kpa</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th>实验结果</th>
+							<td id="F35">{{F35}}</td>
+							<td id="F36">{{F36}}</td>
+							<td id="F37">{{F37}}</td>
+						</tr>
+						<tr>
+							<th>实验结论</th>							
+							<td id="F38">{{F38}}</td>
+							<td id="F39">{{F39}}</td>
+							<td id="F40">{{F40}}</td>
+						</tr>						
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-12">
+				<table class="table table-bordered">
+					<thead>
+						<tr class="table-header">
+							<th></th>
+							<th>不得发生局减和制动作用</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th>实验结果</th>
+							<td id="F41">{{F41}}</td>
+						</tr>
+						<tr>
+							<th>实验结论</th>							
+							<td id="F42">{{F42}}</td>
+						</tr>						
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+	</div>
+	<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					警告！
+				</h4>
+			</div>
+			<div class="modal-body">
+				WebSocket未连接！
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+				</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+<!--end 警告模态框-->
+</body>
+<script src="assets/Resources/js/sockjs-0.3.min.js"></script>
+<script src="assets/Resources/js/stomp.js"></script>
+<script src="assets/app/main.js"></script>
+<script type="text/javascript">
+
+	var dataReplyVm = new Vue({
+		el: "#data-reply",			
+		data: {
+			F1: '0',  F2:  '0', F3:  '0', F4:  '0', F5:  '0', F6:  '0',
+			F7: '0',  F8:  '0', F9:  '0', F10: '0', F11: '0', F12: '0',
+			F13: '0', F14: '0', F15: '0', F16: '0', F17: '0', F18: '0',
+			F19: '0', F20: '0', F21: '0', F22: '0', F23: '0', F24: '0',
+			F25: '0', F26: '0', F27: '4', F28: '0', F29: '0', F30: '0',
+			F31: '0', F32: '0', F33: '0', F34: '0', F35: '0', F36: '0',
+			F37: '0', F38: '0', F39: '0', F40: '0', F41: '0', F42: '0',
+			F43: '0', F44: '0', F45: '0', F46: '0', F47: '0', F48: '0',
+			F49: '0', F50: '0', F51: '0', F52: '0', F53: '0', F54: '0',
+			F55: '0', F56: '0', F57: '0', F58: '0', F59: '0', F60: '0'			
+		}
+	});	 
+
+
+	(function (){
+		var pointsArray = [];
+		for(var index = 1; index <= 60; index++){
+			pointsArray.push('F' + index);
+		}		
+		var points = pointsArray.join(',');
+		setInterval(function () {			
+			getCurrentData(points, function(values){            
+				for(var key in values){
+					dataReplyVm[key] = values[key];  
+				}    
+			});        
+		}, 5000);
+	})();
+
+
+	// function processMsg(msg){
+	//     for(var k in msg){
+	//         if(msg[k]&&msg[k]!=-1){
+	//             dataReplyVm[k] = msg[k];
+	//         }
+	//     }
+	// };
+</script>
+</html>

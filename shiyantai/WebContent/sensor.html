@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>传感器测试</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="assets/Resources/css/bootstrap.min.css" rel="stylesheet">
+	<script src="assets/Resources/js/jquery.js"></script>
+	<script src="assets/Resources/js/bootstrap.min.js"></script>
+	<script src="assets/Resources/js/vue.min.js"></script>	
+	<link href="assets/Resources/css/sub-style.css" rel="stylesheet"/>
+	<style>
+		body {
+			background-color: transparent;
+			color: white;
+		}
+		.container-fluid {
+			width: 100%;
+		}
+		
+		table caption {
+			font-size:36px;
+			color: yellowgreen;
+		}
+
+		table tr th {
+			text-align: center;
+		}
+
+		tr:hover{
+			background-color: 	#96CDCD;
+		}
+
+		.panel-body {
+			background-color: transparent;
+		}
+		
+		.form-control{
+			height: auto;
+		}
+		
+		.bsenottombox{
+			height: 500px ;
+			width: 23%;
+			float: left;
+			background: none;
+			margin: 0 1%;
+		}
+		
+		.panel-default{
+			height: 100%;
+		}
+		
+		.panel{
+			background: none;
+			border: 3px solid white;
+		}
+		
+		.panel-default>.panel-heading{
+			background: none;
+			color: white;
+		}
+		
+		.alert-info{
+			background: #bce8f1;
+		}
+		
+		.input-group-addon{
+			border: none;
+			background: none;
+			color: white;
+		}
+		
+		.axis-selected {
+			width: auto;
+			display: inline-block;
+			background-color:#7FFF00;
+			border-radius: 10px;
+			color: black;
+			margin-right: 100px;
+		}
+		.axis-selected label{
+			width: 100%;
+			display: inline-block;
+			background-color:#7FFF00;
+			border-radius: 10px;
+			color: black;
+			margin-right: 100px;
+		}
+		.axis-noselect {
+			width: auto;
+			display: inline-block;
+			background-color: transparent;
+			color: white;
+			margin-right: 100px;
+		}
+		
+		.checkbox{
+			width: 100%;
+		}
+		
+		.glyphicon{
+			top: 7px;
+		}
+	</style>
+</head>
+<body>
+<div class="container-fluid" id="data-reply">
+	<div class="row">
+		<div class="col-md-6">	
+			<table id="tttt" class="table table-condensed table-bordered">
+				<caption>1轴传感器动态测试</caption>
+				<thead>
+					<tr>
+						<th>控制速度</th>
+						<th>实测速度(km/h)</th>
+						<th>绝度误差(km/h)</th>
+						<th>结果</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr><th>50 km/h</th>
+					<td id="D8">{{D8}}</td>
+					<td id="D9">{{D9}}</td>
+					<td id="D10">{{D10}}</td></tr>
+					<tr><th>100 km/h</th>
+					<td id="D11">{{D11}}</td>
+					<td id="D12">{{D12}}</td>
+					<td id="D13">{{D13}}</td></tr>
+					<tr><th>150 km/h</th>
+					<td id="D14">{{D14}}</td>
+					<td id="D15">{{D15}}</td>
+					<td id="D16">{{D16}}</td></tr>
+					<tr><th>200 km/h</th>
+					<td id="D17">{{D17}}</td>
+					<td id="D18">{{D18}}</td>
+					<td id="D19">{{D19}}</td></tr>
+					<tr><th>250 km/h</th>
+					<td id="D20">{{D20}}</td>
+					<td id="D21">{{D21}}</td>
+					<td id="D22">{{D22}}</td></tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-md-6">
+		<table id="uuuu" class="table table-condensed table-bordered">
+				<caption>2轴传感器动态测试</caption>
+				<thead>
+					<tr>
+						<th>控制速度</th>
+						<th>实测速度(km/h)</th>
+						<th>绝度误差(km/h)</th>
+						<th>结果</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr><th>50 km/h</th>
+					<td id="D26">{{D26}}</td>
+					<td id="D27">{{D27}}</td>
+					<td id="D28">{{D28}}</td></tr>
+					<tr><th>100 km/h</th>
+					<td id="D29">{{D29}}</td>
+					<td id="D30">{{D30}}</td>
+					<td id="D31">{{D31}}</td></tr>
+					<tr><th>150 km/h</th>
+					<td id="D32">{{D32}}</td>
+					<td id="D33">{{D33}}</td>
+					<td id="D34">{{D34}}</td></tr>
+					<tr><th>200 km/h</th>
+					<td id="D35">{{D35}}</td>
+					<td id="D36">{{D36}}</td>
+					<td id="D37">{{D37}}</td></tr>
+					<tr><th>250 km/h</th>
+					<td id="D38">{{D38}}</td>
+					<td id="D39">{{D39}}</td>
+					<td id="D40">{{D40}}</td></tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12 col-md-6">
+		<table id="vvvv" class="table table-condensed table-bordered">
+				<caption>3轴传感器动态测试</caption>
+				<thead>
+					<tr>
+						<th>控制速度</th>
+						<th>实测速度(km/h)</th>
+						<th>绝度误差(km/h)</th>
+						<th>结果</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr><th>50 km/h</th>
+					<td id="D44">{{D44}}</td>
+					<td id="D45">{{D45}}</td>
+					<td id="D46">{{D46}}</td></tr>
+					<tr><th>100 km/h</th>
+					<td id="D47">{{D47}}</td>
+					<td id="D48">{{D48}}</td>
+					<td id="D49">{{D49}}</td></tr>
+					<tr><th>150 km/h</th>
+					<td id="D50">{{D50}}</td>
+					<td id="D51">{{D51}}</td>
+					<td id="D52">{{D52}}</td></tr>
+					<tr><th>200 km/h</th>
+					<td id="D53">{{D53}}</td>
+					<td id="D54">{{D54}}</td>
+					<td id="D55">{{D55}}</td></tr>
+					<tr><th>250 km/h</th>
+					<td id="D56">{{D56}}</td>
+					<td id="D57">{{D57}}</td>
+					<td id="D58">{{D58}}</td></tr>
+				</tbody>
+			</table>	
+		</div>
+		<div class="col-sm-12 col-md-6">
+		<table id="wwww" class="table table-condensed table-bordered">
+				<caption>4轴传感器动态测试</caption>
+				<thead>
+					<tr>
+						<th>控制速度</th>
+						<th>实测速度(km/h)</th>
+						<th>绝度误差(km/h)</th>
+						<th>结果</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr><th>50 km/h</th>
+					<td id="D62">{{D62}}</td>
+					<td id="D63">{{D63}}</td>
+					<td id="D64">{{D64}}</td></tr>
+					<tr><th>100 km/h</th>
+					<td id="D65">{{D65}}</td>
+					<td id="D66">{{D66}}</td>
+					<td id="D67">{{D67}}</td></tr>
+					<tr><th>150 km/h</th>
+					<td id="D68">{{D68}}</td>
+					<td id="D69">{{D69}}</td>
+					<td id="D70">{{D70}}</td></tr>
+					<tr><th>200 km/h</th>
+					<td id="D71">{{D71}}</td>
+					<td id="D72">{{D72}}</td>
+					<td id="D73">{{D73}}</td></tr>
+					<tr><th>250 km/h</th>
+					<td id="D74">{{D74}}</td>
+					<td id="D75">{{D75}}</td>
+					<td id="D76">{{D76}}</td></tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="row">
+		<div class="bsenottombox">
+			<div class="panel panel-default">
+				<div class="panel-heading">参数设置</div>
+				<div class="panel-body" style="height:100%;">
+					<div class="input-group">
+						<span class="input-group-addon">车号</span>	
+						{{D1}}
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">测试人员</span>
+						{{D2}}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="bsenottombox">
+			<div class="panel panel-default">
+				<div class="panel-heading">传感器类型</div>
+				<div id="D3" class="panel-body" style="height:100%; color: #555;">
+					<div class="checkbox" v-bind:class="{'axis-selected':D3==='1','axis-noselect':D3!='1'}">
+						<label for="" >SAB</label>
+					</div>
+					<div class="checkbox" v-bind:class="{'axis-selected':D3==='2','axis-noselect':D3!='2'}">
+						<label for="" >KNORR</label>
+					</div>
+					<div class="checkbox" v-bind:class="{'axis-selected':D3==='3','axis-noselect':D3!='3'}">
+						<label for="">TFX1</label>
+					</div>
+					<div class="checkbox" v-bind:class="{'axis-selected':D3==='4','axis-noselect':D3!='4'}">
+						<label for="">SFH-2</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="bsenottombox">
+		    <div class="panel panel-default">
+		        <div class="panel-heading">测试轴号</div>
+		        <div class="panel-body">
+		            <div class="input-group">	                
+		                <span class="input-group-addon" v-bind:class="{'axis-selected':D5==='1','axis-noselect':D5!='1'}">一轴</span>{{D6}}
+		            </div>
+		            <div class="input-group">
+		                <span class="input-group-addon"v-bind:class="{'axis-selected':D23==='1','axis-noselect':D23!='1'}">二轴</span>{{D24}}
+		            </div>
+		            <div class="input-group">
+		                <span class="input-group-addon"v-bind:class="{'axis-selected':D41==='1','axis-noselect':D41!='1'}">三轴</span>{{D42}}
+		            </div>
+		            <div class="input-group">
+		                <span class="input-group-addon"v-bind:class="{'axis-selected':D59==='1','axis-noselect':D59!='1'}">四轴</span>{{D60}}
+		            </div>
+		        </div>
+		    </div>
+		</div>
+
+		<div class="bsenottombox">
+			<div class="panel panel-default">
+				<div class="panel-heading">静态测试</div>
+				<div class="panel-body" style="height:186px;">
+					<div class="input-group"><span class="input-group-addon">一轴</span>
+						{{D7}}
+					</div>
+					<div class="input-group"><span class="input-group-addon">二轴</span>
+						{{D25}}
+					</div>
+					<div class="input-group"><span class="input-group-addon">三轴</span>
+						{{D43}}
+					</div>
+					<div class="input-group"><span class="input-group-addon">四轴</span>
+						{{D61}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row" style="margin-top: 10px;">
+		<div class="alert alert-info" role="alert" style="margin-left: 10px; text-align: left;">操作提示:
+  		<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">操作提示:</span>
+  			<span id="D77">{{D77}}</span>
+		</div>
+	</div>
+</div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					警告！
+				</h4>
+			</div>
+			<div class="modal-body">
+				WebSocket未连接！
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+				</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+<!--end 警告模态框-->
+</body>
+<script src="assets/Resources/js/sockjs-0.3.min.js"></script>
+<script src="assets/Resources/js/stomp.js"></script>
+<script src="assets/app/main.js"></script>
+<script type="text/javascript">
+var dataReplyVm = new Vue({
+			el: "#data-reply",			
+			data: {
+				D1: '1',  D2:  '李浩', D3:  '2', D4:  '---', D5:  '1', D6:  '12345',
+				D7: '---',  D8:  '---', D9:  '---', D10: '---', D11: '---', D12: '---',
+				D13: '---', D14: '---', D15: '---', D16: '---', D17: '---', D18: '---',
+				D19: '---', D20: '---', D21: '---', D22: '---', D23: '---', D24: '---',
+				D25: '---', D26: '---', D27: '---', D28: '---', D29: '---', D30: '---',
+				D31: '---', D32: '---', D33: '---', D34: '---', D35: '---', D36: '---',
+				D37: '---', D38: '---', D39: '---', D40: '---', D41: '1', D42: '---',
+				D43: '---', D44: '---', D45: '---', D46: '---', D47: '---', D48: '---',
+				D49: '---', D50: '---', D51: '---', D52: '---', D53: '---', D54: '---',
+				D55: '---', D56: '---', D57: '---', D58: '---', D59: '---', D60: '---',
+				D61: '---', D62: '---', D63: '---', D64: '---', D65: '---', D66: '---',
+				D67: '---', D68: '---', D69: '---', D70: '---', D71: '---', D72: '---',
+				D73: '---', D74: '---', D75: '---', D76: '---', D77: '1', D78: '2',
+				D79: '1', D80: '1'
+			},
+			mounted: function(){
+			}
+		});
+
+		(function (){
+			var pointsArray = [];
+			for(var index = 1; index <= 80; index++){
+				points.push('D' + index);
+			}
+			var points = pointsArray.join(',');
+			setInterval(function () {			
+				getCurrentData(points, function(values){            
+					for(var key in values){
+						dataReplyVm[key] = values[key];  
+					}    
+				});        
+			}, 5000);
+		})();
+ 
+	// function processMsg(msg){
+	// 	for(var k in msg){
+	// 		if(msg[k]&&msg[k]!=-1){
+	// 			if(k == 'D3'){
+	// 				$('#'+msg[k]).attr("checked", true);
+	// 			}else if(k == 'D5' || k == 'D23' || k == 'D41' || k == 'D59'){
+	// 				if(msg[k] == -1){
+	// 					$('#'+k).attr("checked", false);
+	// 				}else{
+	// 					$('#'+k).attr("checked", true);
+	// 				}
+	// 			}else if(k == 'D1' || k == 'D2' || k == 'D7' || k == 'D25' || k == 'D43' || k == 'D61' || k == 'D6' || k == 'D24' || k == 'D42' || k == 'D60'){
+	// 				$('#'+k).val(msg[k]);
+	// 			}else if(k == 'D77'){
+	// 				$('#'+k).text(msg[k]);
+	// 			}else{
+	// 				$('#'+k).html(msg[k]);
+	// 			}
+	// 		}
+	// 	}
+	// }
+</script>
+</html>

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>系统自检</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="assets/Resources/css/bootstrap.min.css" rel="stylesheet">
+	<script src="assets/Resources/js/jquery.js"></script>
+	<script src="assets/Resources/js/bootstrap.min.js"></script>
+	<script src="assets/Resources/js/vue.min.js"></script>	
+	<link href="assets/Resources/css/sub-style.css" rel="stylesheet"/>
+	<style>
+		/*媒介查询*/
+		@media screen and (min-width: 992px){
+			.col-md-3{
+				width:20%;
+			}
+			.narrow-input{
+				width: 25%;
+				float: left !important;
+			}
+			.narrow-input2{
+				width: 40%;
+				float: left !important;
+			}
+			.label-default{
+				width: 20%;
+				float: left !important;
+				height: 79px;
+				line-height:70px;
+			}
+		}
+		
+		.left-label1{
+			width:59%;
+		}
+		
+		.Checkingtopbox{
+			width: 20%;
+			float: left;
+		}
+		
+		.panel-default{
+			border: 3px solid white;
+			height: 100%;
+		}
+		.panel-body{
+			border: none;
+		}
+		
+		.input-group-sm>.form-control, .input-group-sm>.input-group-addon, .input-group-sm>.input-group-btn>.btn{
+			height: 80px ;
+			line-height: 1.5;
+		}
+		
+		.input-group-addon{
+			background-color: #f5f5f5;
+		}
+		
+		.form-control{
+			height: auto;
+		}
+		
+		tr,td,span,div{
+			background: none !important;
+			color: white !important;
+		}
+		
+		.panel-heading{
+			color: yellowgreen !important;
+		}
+		
+		.value-type{
+			margin-left: 20px;
+			display: inline-block;
+			margin-top: 10px;
+			color: #50ffd0 !important; 
+		}
+	</style>
+</head>
+<body style="background: none !important;height: 1832px; overflow-x: hidden !important;">
+	<div class="container" style="width:100%;height: 100%;margin: 0; padding: 0;"id="leftCheck">
+		<div class="row" style="width: 100%;margin: 0 !important; padding: 0 !important;">
+			<div class="Checkingtopbox">
+				<div class="panel panel-default">
+					<div class="panel-heading">1号风缸</div>
+					<div class="panel-body">
+						<div class="input-group input-group-sm">
+							<span class="input-group-addon left-label1">电磁阀充气</span>
+							<span class="value-type">{{G4}}</span>
+						</div>
+						<div class="input-group input-group-sm">
+							<span class="input-group-addon left-label1">电磁阀排气</span>
+							<span class="value-type">{{G5}}</span>
+						</div>
+						<div class="input-group input-group-sm">
+							<span class="input-group-addon left-label1">压力传感器</span>
+							<span class="value-type">{{G6}}</span>
+						</div>
+						<div class="input-group input-group-sm">
+							<span class="input-group-addon left-label1">泄漏量(kPa)</span>
+							<span class="value-type">{{G7}}</span>
+						</div>
+						<div class="input-group input-group-sm">
+							<span class="input-group-addon left-label1">气密性结果</span>
+							<span class="value-type">{{G8}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="Checkingtopbox">
+				<div class="panel panel-default">
+					<div class="panel-heading">2号风缸</div>
+					<div class="panel-body">
+						<div class="input-group input-group-sm">
+							<span class="input-group-addon left-label1">电磁阀充气</span>
+							<span class="value-type">{{G9}}</span>
+						</div>
+						<div class="input-group input-group-sm">
+							<span class="input-group-addon left-label1">电磁阀排气</span>
+							<span class="value-type">{{G10}}</span>
+						</div>
+						<div class="input-group input-group-sm">
+							<span class="input-group-addon left-label1">压力传感器</span>
+							<span class="value-type">{{G11}}</span>
+						</div>
+						<div class="input-group input-group-sm">
+							<span class="input-group-addon left-label1">泄漏量(kPa)</span>
+							<span class="value-type">{{G12}}</span>
+						</div>
+						<div class="input-group input-group-sm">
+							<span class="input-group-addon left-label1">气密性结果</span>
+							<span class="value-type">{{G13}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="Checkingtopbox">
+				<div class="panel panel-default">
+					<div class="panel-heading">3号风缸</div>
+					<div class="panel-body">
+						<div class="input-group input-group-sm">
+							<span class="input-group-addon left-label1">电磁阀充气</span>
+							<span class="value-type">{{G14}}</span>
+						</div>
+						<div class="input-group input-group-sm">
+							<span class="input-group-addon left-label1">电磁阀排气</span>
+							<span class="value-type">{{G15}}</span>
+						</div>
+						<div class="input-group input-group-sm">
+							<span class="input-group-addon left-label1">压力传感器</span>
+							<span class="value-type">{{G16}}</span>
+						</div>
+						<div class="input-group input-group-sm">
+							<span class="input-group-addon left-label1">泄漏量(kPa)</span>
+							<span class="value-type">{{G17}}</span>
+						</div>
+						<div class="input-group input-group-sm">
+							<span class="input-group-addon left-label1">气密性结果</span>
+							<span class="value-type">{{G18}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="Checkingtopbox">
+				<div class="panel panel-default">
+					<div class="panel-heading">4号风缸</div>
+					<div class="panel-body">
+						<div class="input-group input-group-sm">
+							<span class="input-group-addon left-label1">电磁阀充气</span>
+							<span class="value-type">{{G19}}</span>
+						</div>
+						<div class="input-group input-group-sm">
+							<span class="input-group-addon left-label1">电磁阀排气</span>
+							<span class="value-type">{{G20}}</span>
+						</div>
+						<div class="input-group input-group-sm">
+							<span class="input-group-addon left-label1">压力传感器</span>
+							<span class="value-type">{{G21}}</span>
+						</div>
+						<div class="input-group input-group-sm">
+							<span class="input-group-addon left-label1">泄漏量(kPa)</span>
+							<span class="value-type">{{G22}}</span>
+						</div>
+						<div class="input-group input-group-sm">
+							<span class="input-group-addon left-label1">气密性结果</span>
+							<span class="value-type">{{G23}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="Checkingtopbox">
+				<div class="panel panel-default">
+					<div class="panel-heading">压力开关测试风缸</div>
+					<div class="panel-body">
+						<div class="input-group input-group-sm">
+							<span class="input-group-addon left-label1">电磁阀充气</span>
+							<span class="value-type">{{G24}}</span>
+						</div>
+						<div class="input-group input-group-sm">
+							<span class="input-group-addon left-label1">电磁阀排气</span>
+							<span class="value-type">{{G25}}</span>
+						</div>
+						<div class="input-group input-group-sm">
+							<span class="input-group-addon left-label1">压力传感器</span>
+							<span class="value-type">{{G26}}</span>
+						</div>
+						<div class="input-group input-group-sm">
+							<span class="input-group-addon left-label1">泄漏量(kPa)</span>
+							<span class="value-type">{{G27}}</span>
+						</div>
+						<div class="input-group input-group-sm">
+							<span class="input-group-addon left-label1">气密性结果</span>
+							<span class="value-type">{{G28}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">压力表</div>
+					<div class="panel-body">
+						<div class="container" style="width: 100%">
+							<div class="row">
+							<div class="col-sm-12 col-md-3">
+								<div class="input-group input-group-sm">
+									<span class="input-group-addon left-label1">1#低压</span>
+									<span class="value-type">{{G29}}</span>
+								</div>
+							</div>
+							<div class="col-sm-12 col-md-3">
+								<div class="input-group input-group-sm">
+									<span class="input-group-addon left-label1">2#低压</span>
+									<span class="value-type">{{G31}}</span>
+								</div>
+							</div>
+							<div class="col-sm-12 col-md-3">
+								<div class="input-group input-group-sm">
+									<span class="input-group-addon left-label1">3#低压</span>
+									<span class="value-type">{{G33}}</span>
+								</div>
+							</div>
+							<div class="col-sm-12 col-md-3">
+								<div class="input-group input-group-sm">
+									<span class="input-group-addon left-label1">4#低压</span>
+									<span class="value-type">{{G35}}</span>
+								</div>
+							</div>
+							<div class="col-sm-12 col-md-3">
+								<div class="input-group input-group-sm">
+									<span class="input-group-addon left-label1">压力开关低压</span>
+									<span class="value-type">{{G37}}</span>
+								</div>
+							</div>
+							</div>
+							<div class="row">
+							<div class="col-sm-12 col-md-3">
+								<div class="input-group input-group-sm">
+									<span class="input-group-addon left-label1">1#500KPa</span>
+									<span class="value-type">{{G30}}</span>
+								</div>
+							</div>
+							<div class="col-sm-12 col-md-3">
+								<div class="input-group input-group-sm">
+									<span class="input-group-addon left-label1">2#500KPa</span>
+									<span class="value-type">{{G32}}</span>
+								</div>
+							</div>
+							<div class="col-sm-12 col-md-3">
+								<div class="input-group input-group-sm">
+									<span class="input-group-addon left-label1">3#500KPa</span>
+									<span class="value-type">{{G34}}</span>
+								</div>
+							</div>
+							<div class="col-sm-12 col-md-3">
+								<div class="input-group input-group-sm">
+									<span class="input-group-addon left-label1">4#500KPa</span>
+									<span class="value-type">{{G36}}</span>
+								</div>
+							</div>
+							<div class="col-sm-12 col-md-3">
+								<div class="input-group input-group-sm">
+									<span class="input-group-addon left-label1">压力开关600KPa</span>
+									<span class="value-type">{{G38}}</span>
+								</div>
+							</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row" style="height: 41%; margin-bottom: 15px;">
+			<div class="col-md-8" style="height: 100%;">
+				<div class="panel panel-default">
+					<div class="panel-heading">排风阀信号</div>
+					<div class="panel-body">
+						<div class="container" style="width:100%;height: 100%;margin: 0; padding: 0;">
+						<div class="row" style="width: 100%;">
+						<div class="">
+							<div class="panel panel-default"  style="border: none;">
+								<div class="panel-heading">24V信号</div>
+								<div class="panel-body">
+									<div class="input-group input-group-sm narrow-input">
+										<span class="input-group-addon">一轴保压</span>
+										<span class="value-type">{{G39}}</span>
+									</div>
+									<div class="input-group input-group-sm narrow-input">
+										<span class="input-group-addon">二轴保压</span>
+										<span class="value-type">{{G41}}</span>
+									</div>
+									<div class="input-group input-group-sm narrow-input">
+										<span class="input-group-addon">三轴保压</span>
+										<span class="value-type">{{G43}}</span>
+									</div>
+									<div class="input-group input-group-sm narrow-input">
+										<span class="input-group-addon">四轴保压</span>
+										<span class="value-type">{{G45}}</span>
+									</div>
+									<div class="input-group input-group-sm narrow-input">
+										<span class="input-group-addon">一轴排风</span>
+										<span class="value-type">{{G40}}</span>
+									</div>
+									<div class="input-group input-group-sm narrow-input">
+										<span class="input-group-addon">二轴排风</span>
+										<span class="value-type">{{G42}}</span>
+									</div>
+									<div class="input-group input-group-sm narrow-input">
+										<span class="input-group-addon">三轴排风</span>
+										<span class="value-type">{{G44}}</span>
+									</div>
+									<div class="input-group input-group-sm narrow-input">
+										<span class="input-group-addon">四轴排风</span>
+										<span class="value-type">{{G46}}</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						</div>
+						<div class="row" style="border: none;">
+						<div style="border: none;">
+							<hr  style="border-bottom: 3px solid white;"/>
+							<div class="panel panel-default" style="border: none;">
+								<div class="panel-heading">48V信号</div>
+								<div class="panel-body">
+									<div class="input-group input-group-sm narrow-input">
+										<span class="input-group-addon">一轴保压</span>
+										<span class="value-type">{{G47}}</span>
+									</div>
+									<div class="input-group input-group-sm narrow-input">
+										<span class="input-group-addon">二轴保压</span>
+										<span class="value-type">{{G49}}</span>
+									</div>
+									<div class="input-group input-group-sm narrow-input">
+										<span class="input-group-addon">三轴保压</span>
+										<span class="value-type">{{G51}}</span>
+									</div>
+									<div class="input-group input-group-sm narrow-input">
+										<span class="input-group-addon">四轴保压</span>
+										<span class="value-type">{{G53}}</span>
+									</div>
+									<div class="input-group input-group-sm narrow-input">
+										<span class="input-group-addon">一轴排风</span>
+										<span class="value-type">{{G48}}</span>
+									</div>
+									<div class="input-group input-group-sm narrow-input">
+										<span class="input-group-addon">二轴排风</span>
+										<span class="value-type">{{G50}}</span>
+									</div>
+									<div class="input-group input-group-sm narrow-input">
+										<span class="input-group-addon">三轴排风</span>
+										<span class="value-type">{{G52}}</span>
+									</div>
+									<div class="input-group input-group-sm narrow-input">
+										<span class="input-group-addon">四轴排风</span>
+										<span class="value-type">{{G54}}</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						</div>	
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4" style="height: 100%;">
+				<div class="panel panel-default" style="height: 100%;">
+					<div class="panel-heading">电机信号</div>
+					<div class="panel-body right-box" style="margin:120px 0;">
+						<span class="label label-default">一轴</span>
+						<div class="input-group input-group-sm narrow-input2">
+							<span class="input-group-addon">控制</span>
+							<span class="value-type">{{G60}}</span>
+						</div>
+						<div class="input-group input-group-sm narrow-input2">
+							<span class="input-group-addon">反馈</span>
+							<span class="value-type">{{G61}}</span>
+						</div>
+						<span class="label label-default">二轴</span>
+						<div class="input-group input-group-sm narrow-input2">
+							<span class="input-group-addon">控制</span>
+							<span class="value-type">{{G62}}</span>
+						</div>
+						<div class="input-group input-group-sm narrow-input2">
+							<span class="input-group-addon">反馈</span>
+							<span class="value-type">{{G63}}</span>
+						</div>
+						<span class="label label-default">三轴</span>
+						<div class="input-group input-group-sm narrow-input2">
+							<span class="input-group-addon">控制</span>
+							<span class="value-type">{{G64}}</span>
+						</div>
+						<div class="input-group input-group-sm narrow-input2">
+							<span class="input-group-addon">反馈</span>
+							<span class="value-type">{{G65}}</span>
+						</div>
+						<span class="label label-default">四轴</span>
+						<div class="input-group input-group-sm narrow-input2">
+							<span class="input-group-addon">控制</span>
+							<span class="value-type">{{G66}}</span>
+						</div>
+						<div class="input-group input-group-sm narrow-input2">
+							<span class="input-group-addon">反馈</span>
+							<span class="value-type">{{G67}}</span>
+						</div>
+						<div class="input-group">
+							<span class="input-group-addon">状态提示</span>
+							<span class="value-type">{{G68}}</span>
+						</div>	
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">动态机能检查(慢充)</div>
+					<div class="panel-body">
+						<div class="input-group input-group-sm narrow-input">
+							<span class="input-group-addon">一轴慢充</span>
+							<span class="value-type">{{G55}}</span>
+						</div>
+						<div class="input-group input-group-sm narrow-input">
+							<span class="input-group-addon">二轴慢充</span>
+							<span class="value-type">{{G56}}</span>
+						</div>
+						<div class="input-group input-group-sm narrow-input">
+							<span class="input-group-addon">三轴慢充</span>
+							<span class="value-type">{{G57}}</span>
+						</div>
+						<div class="input-group input-group-sm narrow-input">
+							<span class="input-group-addon">四轴慢充</span>
+							<span class="value-type">{{G58}}</span>
+						</div>
+						<div class="input-group input-group-sm narrow-input">
+							<span class="input-group-addon">压力开关慢充</span>
+							<span class="value-type">{{G59}}</span>
+						</div>
+						<div class="input-group input-group-sm narrow-input">
+							<span class="input-group-addon">实验人</span>
+							<span class="value-type">{{G1}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					警告！
+				</h4>
+			</div>
+			<div class="modal-body">
+				WebSocket未连接或连接超时！
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+				</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+<!--end 警告模态框-->
+</body>
+<script src="assets/Resources/js/sockjs-0.3.min.js"></script>
+<script src="assets/Resources/js/stomp.js"></script>
+<script src="assets/app/main.js"></script>
+<script>
+//数据绑定
+var deviceVm = new Vue({
+	el:'#leftCheck',
+	data: {
+		G1: '000',  G2:  '000', G3:  '2', G4:  '000', G5:  '000', G6:  '000',
+		G7: '000',  G8:  '000', G9:  '000', G10: '000', G11: '000', G12: '000',
+		G13: '000', G14: '000', G15: '000', G16: '000', G17: '000', G18: '000',
+		G19: '000', G20: '000', G21: '000', G22: '000', G23: '000', G24: '000',
+		G25: '000', G26: '000', G27: '000', G28: '000', G29: '000', G30: '000',
+		G31: '000', G32: '000', G33: '000', G34: '000', G35: '000', G36: '000',
+		G37: '000', G38: '000', G39: '000', G40: '000', G41: '000', G42: '000',
+		G43: '000', G44: '000', G45: '000', G46: '000', G47: '000', G48: '000',
+		G49: '000', G50: '000', G51: '000', G52: '000', G53: '000', G54: '000',
+		G55: '000', G56: '000', G57: '000', G58: '000', G59: '000', G60: '000',
+		G61: '000', G62: '000', G63: '000', G64: '000', G65: '000', G66: '000',
+		G67: '000', G68: '000', G69: '000', G70: '000', G71: '000', G72: '000',
+		G73: '000', G74: '000', G75: '000', G76: '000', G77: '000', G78: '000',
+		G79: '000', G80: '000', 
+	}
+});
+
+
+(function (){
+	var pointsArray = [];
+	for(var index = 1; index <= 80; index++){
+		pointsArray.push('A' + index);
+	}
+	var points = pointsArray.join(',');
+	setInterval(function () {			
+		getCurrentData(points, function(values){            
+			for(var key in values){
+				dataReplyVm[key] = values[key];  
+			}    
+		});        
+	}, 5000);
+})();
+
+// function processMsg(msg){
+//     for(var k in msg){
+//         if(msg[k]&&msg[k]!=-1){
+//             $('#'+k).val(msg[k]);
+//         }
+//     }
+// };
+</script>
+
+</html>

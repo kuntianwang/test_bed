@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>压力开关测试</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="assets/Resources/css/bootstrap.min.css" rel="stylesheet">
+	<script src="assets/Resources/js/jquery.js"></script>
+	<script src="assets/Resources/js/bootstrap.min.js"></script>
+	<script src="assets/Resources/js/vue.min.js"></script>	
+	<link href="assets/Resources/css/sub-style.css" rel="stylesheet"/>
+	<style>
+		body {
+			background-color: transparent;
+		}
+		
+		table {
+			width: 100%;
+		}
+		
+		table tr th {
+			text-align: center;
+		}
+		
+		#params tr th {
+			width: 250px;
+			text-align: center;
+		}
+		
+		#data-reply {
+			height:90%;
+		}
+		
+		.table-caption {
+			 font-size:36px;
+			 color: yellowgreen;
+		}
+		
+		tr:hover{
+			background-color: 	#96CDCD;
+		}
+		
+		.alert-info{
+			text-align: left;
+		}
+	</style>
+</head>
+<body>
+<div class="container-fluid" id="data-reply">
+	<div class="row">
+		<div class="col-md-4">
+			<table class="table table-condensed table-bordered" id="params">
+				<caption class="table-caption">测试参数</caption>
+				<tr>
+					<th>压力开关编号</th>
+					<td id="C1">{{C1}}</td>					
+				</tr>
+				<tr>
+					<th>车号</th>
+					<td id="C2">{{C2}}</td>					
+				</tr>
+				<tr>
+					<th>型号</th>
+					<td id="C3">{{C3}}</td>					
+				</tr>
+				<tr>
+					<th>测试人员</th>
+					<td id="C4">{{C4}}</td>					
+				</tr>
+			</table>			
+		</div>
+		<div class="col-md-8">
+			<table class="table table-condensed table-bordered">
+				<caption class="table-caption">测试数据</caption>
+				<thead>
+					<tr class="table-header">
+						<th>测试点</th>
+						<th>实测值(kPa)</th>
+						<th>标准范围(kPa)</th>
+						<th>结果</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr><th>充风转换点</th>
+						<td id="C6">{{C6}}</td>
+						<td id="C7">{{C7}}</td>
+						<td id="C8">{{C8}}</td>
+					</tr>
+					<tr><th>排气转换点</th>
+						<td id="C9">{{C9}}</td>
+						<td id="C10">{{C10}}</td>
+						<td id="C11">{{C11}}</td>
+					</tr>
+					<tr><th>试验压力</th>
+						<td id="C12">{{C12}}</td>
+						<td id="C13">{{C13}}</td>
+						<td id="C14">{{C14}}</td>
+					</tr>
+					<tr><th>泄漏量</th>
+						<td id="C15">{{C15}}</td>
+						<td id="C16">{{C16}}</td>
+						<td id="C17">{{C17}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="row">
+		<div class="alert alert-info" role="alert">操作提示:
+	  		<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+	        <span class="sr-only">操作提示:</span>
+  			<span id="C19">{{C19}}</span>
+		</div>
+	</div>
+	<div class="row" style="height:800px;">
+		<div class="col-md-12" style="height:100%;">
+			<div id="chart" style="height:100%;"></div>
+		</div>
+	</div>
+</div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					警告！
+				</h4>
+			</div>
+			<div class="modal-body">
+				websocket连接失败
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+				</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+<!--end 警告模态框-->
+</body>
+<script src="assets/Resources/js/sockjs-0.3.min.js"></script>
+<script src="assets/Resources/js/stomp.js"></script>
+<!-- 将canvasJS库更换为echarts-->
+<script src="assets/Resources/js/echarts.js"></script>
+<script src="assets/app/main.js"></script>
+<!-- <script src="assets/Resources/js/canvasjs.min.js"></script>
+<script src="assets/Resources/js/jquery.canvasjs.min.js"></script> -->
+<script type="text/javascript">
+	var pressureChart = (function(){
+		var dataQueue = [];//数据队列
+		var chart = null;
+		var option = {
+			title:{
+				text:'压力开关测试',
+				textStyle:{
+					fontSize:36,
+					color:'#fff'
+				}
+			},
+			grid:{
+				x: 100,
+				y: 100,
+				x2: 100,
+				y2: 30
+			},
+			xAxis:{
+				min:0,
+				max:1000,
+				show:true,
+				axisLabel: {
+					textStyle: {
+						fontSize: 24,
+						color: '#fff'
+					}
+				}
+			},
+			yAxis:{
+				min:0,
+				max:600,
+				axisLabel: {
+					textStyle: {
+						fontSize: 24,
+						color: '#fff'
+					}
+				}
+			},
+			series:[
+				{
+					type:'line',
+					showSymbol:false,
+					hoverAnimation:false,
+					data:[]
+				}
+			]
+		};
+		
+		/*
+		 *设置定时重绘chart
+		 */
+		function reDrawChart(){
+			setInterval(function(){
+				var queue = dataQueue;
+				if(queue.length){//判断队列是否为空
+					// chart.options.data[0].dataPoints.push(queue.shift());
+					option.series[0].data.push(queue.shift());
+				}
+				chart.setOption(option);
+			},100)
+		}
+		
+		return {
+			init: function(){
+				chart = echarts.init($("#chart")[0]);
+				chart.setOption(option);//初始化一次
+				reDrawChart();
+			},
+			intoQueue: function(datas){
+				for(i in datas){
+					dataQueue.push(datas[i])
+				}
+			}
+		}
+	})();
+
+	var dataReplyVm = new Vue({
+		el: "#data-reply",			
+		data: {
+			C1: '',  C2:  '', C3:  '', C4:  '', C5:  '', C6:  '',
+			C7: '100-300',  C8:  '', C9:  '', C10: '100-300', C11: '', C12: '',
+			C13: '600±20', C14: '', C15: '', C16: '<5', C17: '', C18: '',C19: ''
+		},
+		mounted: function(){
+			pressureChart.init();
+		}
+	});	 
+	
+	setInterval(function () {
+		// 待定
+        getCurrentData('C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13,C14,C15,C16,C17,C18,C19', function(values){            
+            for(var key in values){
+				if(key === 'C18'){
+					pressureChart.intoQueue(values[key].map(function(value){
+	                    return [value['x'],value['y']];
+	                }));
+				} else {
+					dataReplyVm[key] = values[key];  
+				}				                          
+            }    
+        });        
+    }, 5000);
+
+	// function processMsg(msg){
+	//     for(var k in msg){
+	//         if(msg[k] && msg[k]!=-1){
+	//             if('C18' === k){//压力波形图
+	//                 pressureChart.intoQueue(msg[k].map(function(value){
+	//                     return [value['x'],value['y']];
+	//                 }));
+	//             }else{
+	//             	dataReplyVm[k] = msg[k];
+	//             }
+	//         }
+	//     }
+	// };
+
+ </script>
+</html>
